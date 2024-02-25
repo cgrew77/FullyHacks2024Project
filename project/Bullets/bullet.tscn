@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cie5m6nf8udyi"]
+
+[ext_resource type="Texture2D" uid="uid://c0fl3w67p2c45" path="res://Bullets/Yellow bullet.png" id="1_gjcam"]
+[ext_resource type="Script" path="res://Bullets/bullet.gd" id="1_o7cxi"]
+[ext_resource type="PackedScene" uid="uid://cljmnkcrt5edl" path="res://Bullets/bullet_hit_box.tscn" id="3_dbb8r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8px4"]
+size = Vector2(4, 4)
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_o7cxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(0.125, 1)
+texture = ExtResource("1_gjcam")
+
+[node name="BulletHitBox" parent="." groups=["bullet"] instance=ExtResource("3_dbb8r")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="BulletHitBox" index="0"]
+shape = SubResource("RectangleShape2D_y8px4")
+
+[editable path="BulletHitBox"]
