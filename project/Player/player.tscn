@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dx6hv8qpil172"]
+[gd_scene load_steps=14 format=3 uid="uid://dx6hv8qpil172"]
 
 [ext_resource type="Texture2D" uid="uid://dme38s6c8oplu" path="res://Player/player.png" id="1_ul1rg"]
 [ext_resource type="Script" path="res://Player/player.gd" id="1_x6wc4"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cn3lpal5bsvbw" path="res://Textures/GUI/exp_bar.png" id="4_rrxvs"]
 [ext_resource type="Texture2D" uid="uid://c6kh711a2mih8" path="res://Textures/GUI/exp_progress.png" id="5_tdxe1"]
 [ext_resource type="FontFile" uid="uid://c4ufad13gw813" path="res://fonts/CYBERBANG.ttf" id="6_7x6bp"]
+[ext_resource type="Texture2D" uid="uid://ogfqql2ib6dj" path="res://Health/healthbar.png" id="7_7ftbq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amwcm"]
 size = Vector2(20, 34)
@@ -17,6 +18,11 @@ size = Vector2(16, 29)
 radius = 50.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ui0hc"]
+
+[sub_resource type="Gradient" id="Gradient_18m4j"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hpfoy"]
+gradient = SubResource("Gradient_18m4j")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_x6wc4")
@@ -87,6 +93,18 @@ theme_override_font_sizes/font_size = 14
 text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HealthBar" type="TextureProgressBar" parent="GUILayer"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 24.0
+scale = Vector2(2, 1.5)
+value = 100.0
+nine_patch_stretch = true
+texture_over = ExtResource("7_7ftbq")
+texture_progress = SubResource("GradientTexture2D_hpfoy")
+tint_progress = Color(1.445, 0.433, 2.023, 1)
 
 [connection signal="timeout" from="FiringCooldown" to="." method="_on_firing_cooldown_timeout"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]

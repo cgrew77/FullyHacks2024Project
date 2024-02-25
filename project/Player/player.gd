@@ -15,10 +15,13 @@ func _ready():
 	set_exp_bar(experience, calculate_experience_cap())
 
 #Peter Adding --------------
-var Health = 100
+var Health : float = 100.0
+var MaxHealth :float  = 100.0
 var fire_rate : float = 0.5
 var can_fire : bool = true
-#---------------------------
+
+@onready var Health_bar = $GUILayer/HealthBar
+
 #adding
 var experience = 0
 var experience_level = 1
@@ -65,12 +68,18 @@ func shoot(direction):
 #added
 func _on_hurt_box_hurt(damage):
 	Health -= damage
+	update_health_bar()
 	print("player taking a hit")
 	print(Health)
 
 func _on_firing_cooldown_timeout():
 	can_fire = true
 #------------------------------------------
+func update_health_bar():
+	var health_percentage : float = Health / MaxHealth
+	print("percentage:")
+	print(health_percentage)
+	Health_bar.value = health_percentage * 100
 
 #experience grab - christian added
 func _on_grab_area_area_entered(area):
