@@ -7,10 +7,16 @@ var movement_speed = 100.0
 @onready var walkTimer = get_node("%walkTimer")
 
 #Peter Adding --------------
-var Health = 100
+var Health : float = 100.0
+#v2
+var MaxHealth :float  = 100.0
 var fire_rate : float = 0.5
 var can_fire : bool = true
 #---------------------------
+
+#v2
+@onready var Health_bar = $GUILayer/HealthBar
+
 
 func _physics_process(delta):
 	movement()
@@ -53,12 +59,21 @@ func shoot(direction):
 #added
 func _on_hurt_box_hurt(damage):
 	Health -= damage
+	#v2
+	update_health_bar()
 	print("player taking a hit")
 	print(Health)
 
 func _on_firing_cooldown_timeout():
 	can_fire = true
+	
+
 #------------------------------------------
 
-
-
+#v2
+func update_health_bar():
+	var health_percentage : float = Health / MaxHealth
+	print("percentage:")
+	print(health_percentage)
+	Health_bar.value = health_percentage * 100
+	

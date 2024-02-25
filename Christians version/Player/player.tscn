@@ -1,11 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx6hv8qpil172"]
+[gd_scene load_steps=9 format=3 uid="uid://dx6hv8qpil172"]
 
 [ext_resource type="Texture2D" uid="uid://dme38s6c8oplu" path="res://Player/player.png" id="1_ul1rg"]
 [ext_resource type="Script" path="res://Player/player.gd" id="1_x6wc4"]
 [ext_resource type="PackedScene" uid="uid://dhp8ioneb27by" path="res://Utility/hurt_box.tscn" id="3_c3i67"]
+[ext_resource type="Texture2D" uid="uid://ogfqql2ib6dj" path="res://Health/healthbar.png" id="3_sgxty"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amwcm"]
 size = Vector2(20, 34)
+
+[sub_resource type="Gradient" id="Gradient_48mul"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_15bte"]
+gradient = SubResource("Gradient_48mul")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85if7"]
 size = Vector2(16, 29)
@@ -22,11 +28,6 @@ shape = SubResource("RectangleShape2D_amwcm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="walkTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.2
-one_shot = true
-
 [node name="GUILayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" type="Control" parent="GUILayer"]
@@ -34,6 +35,23 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 640.0
 offset_bottom = 360.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="GUILayer"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 24.0
+scale = Vector2(2, 1.5)
+value = 100.0
+nine_patch_stretch = true
+texture_over = ExtResource("3_sgxty")
+texture_progress = SubResource("GradientTexture2D_15bte")
+tint_progress = Color(1.445, 0.433, 2.023, 1)
+
+[node name="walkTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
 
 [node name="FiringCooldown" type="Timer" parent="."]
 
@@ -45,6 +63,8 @@ collision_mask = 2
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_85if7")
 
+[connection signal="changed" from="GUILayer/HealthBar" to="." method="_on_health_bar_changed"]
+[connection signal="value_changed" from="GUILayer/HealthBar" to="." method="_on_health_bar_value_changed"]
 [connection signal="timeout" from="FiringCooldown" to="." method="_on_firing_cooldown_timeout"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
