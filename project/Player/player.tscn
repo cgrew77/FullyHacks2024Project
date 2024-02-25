@@ -1,44 +1,96 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx6hv8qpil172"]
+[gd_scene load_steps=11 format=3 uid="uid://dx6hv8qpil172"]
 
-[ext_resource type="Texture2D" uid="uid://y7ikqf8mcva3" path="res://Player/266db7af9a2931af657d672a161ee180.jpg" id="1_bqow0"]
-[ext_resource type="Script" path="res://Player/player.gd" id="1_f3fn6"]
-[ext_resource type="PackedScene" uid="uid://bove3w8udxd3a" path="res://Utility/hurt_box.tscn" id="2_y4238"]
+[ext_resource type="Texture2D" uid="uid://dme38s6c8oplu" path="res://Player/player.png" id="1_ul1rg"]
+[ext_resource type="Script" path="res://Player/player.gd" id="1_x6wc4"]
+[ext_resource type="PackedScene" uid="uid://dhp8ioneb27by" path="res://Utility/hurt_box.tscn" id="3_c3i67"]
+[ext_resource type="Texture2D" uid="uid://cn3lpal5bsvbw" path="res://Textures/GUI/exp_bar.png" id="4_rrxvs"]
+[ext_resource type="Texture2D" uid="uid://c6kh711a2mih8" path="res://Textures/GUI/exp_progress.png" id="5_tdxe1"]
+[ext_resource type="FontFile" uid="uid://c4ufad13gw813" path="res://fonts/CYBERBANG.ttf" id="6_7x6bp"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g5iu3"]
-radius = 8.0
-height = 26.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_amwcm"]
+size = Vector2(20, 34)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8tse"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_85if7"]
 size = Vector2(16, 29)
 
-[node name="Player" type="CharacterBody2D" groups=["Player", "player"]]
-script = ExtResource("1_f3fn6")
+[sub_resource type="CircleShape2D" id="CircleShape2D_dswoy"]
+radius = 50.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-5.96046e-08, -7.92742e-06)
-scale = Vector2(0.04375, 0.04375)
-texture = ExtResource("1_bqow0")
+[sub_resource type="CircleShape2D" id="CircleShape2D_ui0hc"]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_x6wc4")
+
+[node name="Player" type="Sprite2D" parent="."]
+texture = ExtResource("1_ul1rg")
+hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("CapsuleShape2D_g5iu3")
+shape = SubResource("RectangleShape2D_amwcm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="walkTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
 
-[node name="HurtBox" parent="." instance=ExtResource("2_y4238")]
+[node name="FiringCooldown" type="Timer" parent="."]
+
+[node name="HurtBox" parent="." instance=ExtResource("3_c3i67")]
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-light_mask = 0
-visibility_layer = 0
 position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_b8tse")
+shape = SubResource("RectangleShape2D_85if7")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[node name="GrabArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_dswoy")
+
+[node name="CollectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+shape = SubResource("CircleShape2D_ui0hc")
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ExperienceBar" type="TextureProgressBar" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 338.0
+offset_right = 640.0
+offset_bottom = 378.0
+texture_over = ExtResource("4_rrxvs")
+texture_progress = ExtResource("5_tdxe1")
+
+[node name="lbl_level" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 540.0
+offset_right = 640.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("6_7x6bp")
+theme_override_font_sizes/font_size = 14
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="FiringCooldown" to="." method="_on_firing_cooldown_timeout"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 
 [editable path="HurtBox"]

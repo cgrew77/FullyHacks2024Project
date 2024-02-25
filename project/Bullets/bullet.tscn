@@ -22,4 +22,6 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="BulletHitBox" index="0"]
 shape = SubResource("RectangleShape2D_y8px4")
 
+[connection signal="area_entered" from="BulletHitBox" to="." method="_on_bullet_hit_box_area_entered"]
+
 [editable path="BulletHitBox"]

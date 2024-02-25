@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://drv2ttiej8fxx" path="res://46e4ceddff7f49e18e9b424c45da8a87.webp" id="1_km0x2"]
 [ext_resource type="PackedScene" uid="uid://dx6hv8qpil172" path="res://Player/player.tscn" id="2_rjagb"]
-[ext_resource type="Script" path="res://Player/player.gd" id="3_wpumk"]
-[ext_resource type="PackedScene" uid="uid://eb7esf4kxqno" path="res://Enemy/Enemy.tscn" id="4_rhlsm"]
+[ext_resource type="PackedScene" uid="uid://bkkn0xh0t7olr" path="res://Utility/enemy_spawner.tscn" id="4_dyumo"]
+[ext_resource type="PackedScene" uid="uid://dr6nt1hrqoyxa" path="res://objects/experience_coin.tscn" id="4_j3eyn"]
 
 [node name="World" type="Node2D"]
 
@@ -16,7 +16,10 @@ region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
 
 [node name="Player" parent="." instance=ExtResource("2_rjagb")]
-script = ExtResource("3_wpumk")
 
-[node name="enemy_weak" parent="." instance=ExtResource("4_rhlsm")]
-position = Vector2(147, -4)
+[node name="EnemySpawner" parent="." instance=ExtResource("4_dyumo")]
+
+[node name="Loot" type="Node2D" parent="." groups=["loot"]]
+
+[node name="ExperienceCoin" parent="Loot" instance=ExtResource("4_j3eyn")]
+position = Vector2(85, 2)

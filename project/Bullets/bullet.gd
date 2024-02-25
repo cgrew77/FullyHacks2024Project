@@ -13,8 +13,9 @@ func _process(delta):
 	
 
 #added
-func _on_hit_box_area_entered(area):
-	queue_free()
-
 func get_damage() -> int:
 	return bullet_damage
+
+
+func _on_bullet_hit_box_area_entered(area):
+	queue_free()
