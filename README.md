@@ -2,7 +2,7 @@
 
 <h2>created by Peter Ngyuen and Christian Grewal</h2>
   
-<h2>for FullyHacks 2024 at CSUF</h2>
+<h3>CSUF FullyHacks 2024</h3>
 
 **Description:**
 
