@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://dr6nt1hrqoyxa"]
+
+[ext_resource type="Texture2D" uid="uid://fv6mo527iex2" path="res://objects/copper.png" id="1_ftkyk"]
+[ext_resource type="Script" path="res://objects/experience_coin.gd" id="1_qqd1d"]
+[ext_resource type="AudioStream" uid="uid://24mqnxfpplij" path="res://Audio/Sound Effects/coin-collect.mp3" id="3_dedec"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8sq3"]
+size = Vector2(10, 10)
+
+[sub_resource type="Animation" id="Animation_r01iw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bpfdd"]
+resource_name = "coin_spin"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1, 1.2, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 0, 5, 6, 7, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qt8e"]
+_data = {
+"RESET": SubResource("Animation_r01iw"),
+"coin_spin": SubResource("Animation_bpfdd")
+}
+
+[node name="ExperienceCoin" type="Area2D" groups=["loot"]]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_qqd1d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ftkyk")
+hframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u8sq3")
+
+[node name="Coin_collected" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_dedec")
+max_distance = 1000.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1qt8e")
+}
+
+[connection signal="finished" from="Coin_collected" to="." method="_on_coin_collected_finished"]
