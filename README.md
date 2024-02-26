@@ -1,6 +1,6 @@
-<h1>**Neon Nonsense (and Whatnot)**</h1>
+<h1>Neon Nonsense (and Whatnot)</h1>
 
-created by Peter Ngyuen and Christian Grewal for FullyHacks 2024 at CSUF
+<h2>created by Peter Ngyuen and Christian Grewal for FullyHacks 2024 at CSUF</h2>
 
 **Description:**
 
