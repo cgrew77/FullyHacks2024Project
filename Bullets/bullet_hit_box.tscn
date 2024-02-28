@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cljmnkcrt5edl"]
-
-[ext_resource type="Script" path="res://Bullets/bullet_hit_box.gd" id="1_mf2xf"]
-
-[node name="BulletHitBox" type="Area2D"]
-script = ExtResource("1_mf2xf")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
