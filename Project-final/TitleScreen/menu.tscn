@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd4j1fnnaj0gc"]
+
+[ext_resource type="FontFile" uid="uid://cclnvllf7t5lm" path="res://fonts/NeonSans.otf" id="1_nrmnf"]
+[ext_resource type="Script" path="res://TitleScreen/menu.gd" id="1_sn8m3"]
+[ext_resource type="FontFile" uid="uid://c4ufad13gw813" path="res://fonts/CYBERBANG.ttf" id="3_sjxds"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sn8m3")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.113725, 0.0156863, 0.2, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("1_nrmnf")
+theme_override_font_sizes/font_size = 60
+text = "NEON NONSENSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rules" type="Label" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("1_nrmnf")
+theme_override_font_sizes/font_size = 21
+text = "How To play
+WASD - to move around
+Mouse pointer aim and shoot at enemies to kill them
+Don’t let the enemies touch you
+collect coins to level up and gain POWER!
+REACH THE END
+MAKE IT OUT ALIVE!
+
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 150.0
+offset_right = 400.0
+offset_bottom = 200.0
+theme_override_fonts/font = ExtResource("3_sjxds")
+theme_override_font_sizes/font_size = 24
+text = "Play"
+
+[node name="btn_help" type="Button" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 210.0
+offset_right = 400.0
+offset_bottom = 260.0
+theme_override_fonts/font = ExtResource("3_sjxds")
+theme_override_font_sizes/font_size = 24
+text = "Help"
+
+[node name="btn_quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 270.0
+offset_right = 400.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("3_sjxds")
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[node name="Help_back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 270.0
+offset_right = 177.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("3_sjxds")
+theme_override_font_sizes/font_size = 24
+text = "Back"
+
+[connection signal="pressed" from="btn_play" to="." method="_on_btn_play_pressed"]
+[connection signal="pressed" from="btn_help" to="." method="_on_btn_help_pressed"]
+[connection signal="pressed" from="btn_quit" to="." method="_on_btn_quit_pressed"]
+[connection signal="pressed" from="Help_back" to="." method="_on_help_back_pressed"]
